@@ -56,12 +56,16 @@
                                         }
                                     }
                                 )
-                                // FB.api(
-                                //     `/${userId}/accounts?access_token=${accessToken}`,
-                                //     function (response) {
-                                //         console.log(response)
-                                //     }
-                                // )
+                                var message, link
+                                message = prompt('message')
+                                link = prompt('link')
+                                FB.api(
+                                    `/${pageId}/feed?message=${message}&link=${link}`,
+                                    'post',
+                                    function (response) {
+                                        console.log(response)
+                                    }
+                                )
                             })
                         })
                     } else {
