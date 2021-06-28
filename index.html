@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>(POC) - Graph-api</title>
+    </head>
+    <body>
+        <script>
+            var uri = ''
+            var pageId = ''
+            var pageToken = ''
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1817551498427423',
+                    autoLogAppEvents: true,
+                    xfbml: true,
+                    version: 'v11.0',
+                })
+                FB.login(function (response) {
+                    if (response.authResponse) {
+                        console.log('Welcome!  Fetching your information.... ')
+                        FB.api('/me', function (response) {
+                            FB.getLoginStatus(function (response) {
+                                console.log(response)
+                                if (response.status === 'connected') {
+                                    var accessToken =
+                                        response.authResponse.accessToken
+                                    var userId = response.authResponse.userID
+                                } else {
+                                    return false
+                                }
+                                console.log(userId)
+                                FB.api(
+                                    `/${userId}/accounts`,
+                                    function (response) {
+                                        if (response && !response.error) {
+                                            console.log(response)
+                                        }
+                                    }
+                                )
+                                FB.api(
+                                    `/${userId}/permissions`,
+                                    function (response) {
+                                        if (response && !response.error) {
+                                            console.log(response)
+                                        }
+                                    }
+                                )
+                                FB.api(
+                                    `/${userId}/accounts`,
+                                    function (response) {
+                                        if (response && !response.error) {
+                                            console.log(response)
+                                        }
+                                    }
+                                )
+                                // FB.api(
+                                //     `/${userId}/accounts?access_token=${accessToken}`,
+                                //     function (response) {
+                                //         console.log(response)
+                                //     }
+                                // )
+                            })
+                        })
+                    } else {
+                        return false
+                    }
+                })
+            }
+        </script>
+        <script
+            async
+            defer
+            crossorigin="anonymous"
+            src="https://connect.facebook.net/en_US/sdk.js"
+        ></script>
+    </body>
+</html>
